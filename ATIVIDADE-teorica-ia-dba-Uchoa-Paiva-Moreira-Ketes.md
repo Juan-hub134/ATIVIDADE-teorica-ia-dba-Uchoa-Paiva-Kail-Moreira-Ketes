@@ -19,6 +19,43 @@ acesso, autorização de acesso, regras de integridade.
 Programadores de aplicações, usuários sofisticados, usuários especialistas,
 usuários navegantes — vantagens e limitações de cada perfil.
 
+-Resposta:
+Segundo Silberschatz, Korth e Sudarshan (Database System Concepts, 7ª ed., Cap. 1), nem todo mundo usa o banco de dados da mesma forma. Os autores dividem os usuários em quatro grupos principais, dependendo de como eles acessam o sistema e do quanto entendem do assunto:
+
+* **Programadores de Aplicações:** São os desenvolvedores que escrevem o código (em Java, Python, C#) e embutem comandos de banco para fazer a ponte entre a aplicação e o **SGBD (Sistema de Gerenciamento de Banco de Dados — conjunto de softwares responsável por criar, gerenciar, armazenar e manipular os dados de forma segura)**, utilizando instruções de **DML (Linguagem de Manipulação de Dados — comandos como INSERT, UPDATE e DELETE usados para consultar e alterar os dados)** e **DDL (Linguagem de Definição de Dados — comandos como CREATE e ALTER usados para definir a estrutura das tabelas)**.
+  * *Vantagem:* Facilitam a vida do usuário final, criando telas e rotinas prontas que escondem a complexidade do **SQL (Linguagem de Consulta Estruturada — a linguagem padrão usada para se comunicar com bancos de dados relacionais)**.
+  * *Limitação:* Podem criar gargalos de desempenho ou brechas de segurança (como SQL Injection) se o código for mal escrito.
+
+* **Usuários Sofisticados:** Analistas de dados, pessoal de **BI (Business Intelligence — Inteligência de Negócios, focada na análise de dados para tomada de decisões)** ou cientistas de dados que não usam sistemas prontos. Eles montam e rodam as consultas diretamente na linguagem SQL usando ferramentas como `psql` ou DBeaver.
+  * *Vantagem:* Têm total liberdade para fazer análises rápidas e tirar respostas do banco sem precisar pedir para a TI criar uma tela nova.
+  * *Limitação:* Se rodarem uma consulta pesada sem otimização, podem travar o banco e prejudicar todo o sistema.
+
+* **Usuários Especialistas:** Pessoal técnico que constrói aplicações fora do padrão trivial de cadastro e consulta, como sistemas de inteligência artificial, processamento de dados geográficos em **GIS (Sistemas de Informação Geográfica — softwares para análise e visualização de dados espaciais e mapas)** ou simulações científicas.
+  * *Vantagem:* Conseguem extrair o máximo do SGBD, usando recursos avançados e estruturas de dados complexas.
+  * *Limitação:* Criam soluções difíceis de manter e com pouca portabilidade para outros bancos.
+
+* **Usuários Navegantes (Naïve / Leigos):** O usuário comum do dia a dia (o caixa do mercado, o atendente, o cliente no aplicativo do banco). Ele só clica em botões e preenche formulários sem nem saber que existe um banco de dados rodando por trás.
+  * *Vantagem:* Não precisam aprender nada de SQL e quase não oferecem risco direto à estrutura do banco.
+  * *Limitação:* Não têm flexibilidade nenhuma; só fazem exatamente o que a tela permite.
+
+---
+
+### O papel do DBA e o controle de acesso no dia a dia
+
+Para o banco não virar uma bagunça com tanta gente diferente acessando, entra o **DBA (Database Administrator ou Administrador de Banco de Dados — o profissional responsável por manter o banco seguro, disponível e com bom desempenho)**. A regra de ouro aqui é o **Princípio do Menor Privilégio**: ninguém ganha mais acesso do que o estritamente necessário para fazer o seu trabalho.
+
+Para garantir isso, o DBA usa três ferramentas essenciais do SGBD:
+
+1. **Roles e Permissões:** Em vez de dar permissão usuário por usuário (o que seria inviável), o DBA cria papéis (ex: `role_atendimento`, `role_analista`). Cada perfil recebe só os comandos necessários (`SELECT`, `INSERT`, etc.) e os usuários são colocados dentro dessas *roles*.
+2. **Views (Visões):** Funcionam como espelhos ou filtros para o banco. Se um analista precisa ver a lista de clientes, mas não pode ver o saldo nem a senha deles, o DBA cria uma *view* mostrando só os campos liberados.
+3. **Auditoria:** É o registro de logs do sistema (o famoso "quem fez o quê e quando"). Serve para rastrear acessos suspeitos, identificar quem rodou uma consulta que travou o servidor e manter a conformidade com regras de segurança e privacidade.
+
+---
+### Referências Bibliográficas
+
+* SILBERSCHATZ, Abraham; KORTH, Henry F.; SUDARSHAN, S. **Database System Concepts**. 7th ed. New York: McGraw-Hill, 2020. Capítulos 1 e 16. 
+
+
 ### 1.3 Riscos do uso de IA por usuários especialistas
 Consulta incorreta, exposição de dados sensíveis, degradação de performance,
 vazamento por prompts — impactos na segurança e na integridade.
@@ -62,6 +99,45 @@ no contexto do uso de IA.
 
 Exemplo de view `clientes_visiveis` no PostgreSQL e exemplo de role/permissão.
 Um caso real: sistema de vendas, clínica ou biblioteca.
+-Reposta:
+
+Para aplicar os conceitos apresentados anteriormente, podemos considerar uma empresa que possui um sistema de vendas e permite que usuários especialistas utilizem ferramentas de Inteligência Artificial para auxiliar na criação de consultas e na análise dos dados. Nesse cenário, o DBA precisa definir quais informações cada usuário pode acessar, evitando que uma consulta gerada pela IA permita acesso a dados que não são necessários para sua função.
+
+### Exemplo de View `clientes_visiveis`
+
+Uma empresa pode possuir uma tabela de clientes com informações como nome, CPF, endereço e telefone. Entretanto, um analista de vendas pode precisar apenas do nome e do telefone dos clientes para realizar suas atividades.
+
+Nesse caso, o DBA pode criar uma **view**, chamada `clientes_visiveis`, contendo somente as informações necessárias para esse usuário. Dessa forma, o analista não precisa ter acesso direto a todos os dados existentes na tabela original.
+
+Essa estratégia permite controlar quais informações ficam disponíveis para cada perfil de usuário. No cenário proposto, isso é importante porque uma ferramenta de IA pode gerar uma consulta que solicite mais informações do que o usuário realmente precisa. A view funciona como uma camada de controle, permitindo que o usuário consulte os dados necessários sem ter acesso a todas as informações da tabela original.
+
+O livro **Database System Concepts**, de Abraham Silberschatz, Henry F. Korth e S. Sudarshan, apresenta as views como relações virtuais definidas a partir de consultas. No exemplo apresentado pelos autores, um funcionário precisa consultar informações de professores de determinado departamento, mas não possui autorização para acessar diretamente toda a relação de professores. A view permite disponibilizar somente as informações que esse funcionário está autorizado a consultar.
+
+### Exemplo de Role e Permissão
+
+Outro mecanismo importante é a utilização de **roles**. Em uma empresa, o DBA pode criar uma role específica para os analistas de vendas, definindo as permissões necessárias para esse perfil.
+
+Por exemplo, uma `role_analista_vendas` poderia permitir que seus usuários consultassem as informações necessárias para elaborar relatórios, sem conceder acesso a dados que não fazem parte de suas atividades.
+
+A utilização de roles facilita o gerenciamento das permissões, pois o DBA pode definir as autorizações para um determinado perfil e depois associar esse perfil aos usuários. Assim, não é necessário configurar individualmente todas as permissões de cada funcionário.
+
+No capítulo sobre autorização do livro **Database System Concepts**, os autores apresentam o uso de roles como uma forma de organizar as autorizações do banco de dados. Uma role pode receber privilégios e depois ser atribuída a usuários, fazendo com que esses usuários recebam as permissões associadas à role.
+
+### Caso prático: sistema de vendas
+
+Considere uma empresa que possui milhares de clientes e realiza vendas diariamente. Os analistas utilizam ferramentas de IA para auxiliar na criação de consultas e na produção de relatórios.
+
+Sem uma política adequada de acesso, um usuário poderia visualizar informações pessoais que não são necessárias para sua atividade. Além disso, uma consulta gerada pela IA pode solicitar uma quantidade de dados maior do que a pretendida pelo usuário.
+
+Para evitar esse problema, o DBA pode organizar os acessos por meio de **roles e views**. Os analistas receberiam uma role compatível com suas funções e poderiam consultar views que disponibilizassem somente os dados necessários para suas atividades.
+
+Assim, a IA seria utilizada como uma ferramenta de auxílio à análise, mas não definiria quais dados o usuário pode acessar. Essa decisão continuaria sendo controlada pelas permissões e pelas estruturas de segurança definidas no banco de dados.
+
+Esse modelo segue o **Princípio do Menor Privilégio**, pois o usuário recebe somente as permissões necessárias para realizar sua função. Dessa forma, mesmo que a IA gere uma consulta mais complexa ou solicite informações que o usuário não deveria acessar, as permissões definidas pelo DBA continuam limitando o acesso aos dados.
+
+### Referência utilizada nesta seção
+
+SILBERSCHATZ, Abraham; KORTH, Henry F.; SUDARSHAN, S. **Database System Concepts**. 7th ed. New York: McGraw-Hill, 2020. Capítulos 4 e 16.
 
 ## 3. Referências
 
