@@ -3,7 +3,7 @@
 **Aluno(s):** Henrick Uchoa, Allan Paiva, Juan Moreira, Guilherme Ketes
 **Turma:** Banco de Dados 2026 (Turma : G2)
 **Data:** 16/08/2026
-**Repositório Git:** https://github.com/usuario/atividade-bd
+**Repositório Git:** https://github.com/Juan-hub134/ATIVIDADE-teorica-ia-dba-Uchoa-Paiva-Kail-Moreira-Ketes.git
 
 ## Resumo Executivo
 
