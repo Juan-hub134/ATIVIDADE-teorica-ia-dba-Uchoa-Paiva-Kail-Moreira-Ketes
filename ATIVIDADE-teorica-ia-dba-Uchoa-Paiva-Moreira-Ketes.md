@@ -26,18 +26,34 @@ vazamento por prompts — impactos na segurança e na integridade.
 ### 1.4 Distribuição segura de dados
 Menor privilégio, views, roles customizadas, controle de execução, auditoria,
 conformidade (LGPD).
- -Resposta:
-   Menor privilégio: Cada usuário deve possuir somente as permissões necessárias para sua função. Por exemplo, um analista pode consultar vendas, mas não deve poder excluir dados ou acessar informações pessoais desnecessárias.
-   Roles: São conjuntos de permissões atribuídos aos usuários de acordo com sua função. Por exemplo, pode existir uma role analista, com permissão apenas para consultar determinados dados.
-   Views: Permitem disponibilizar apenas uma parte dos dados. Por exemplo, uma view de vendas pode mostrar valores e produtos, mas ocultar  CPF e endereço dos clientes.
-   Controle de execução: As permissões devem ser verificadas pelo banco para impedir que uma consulta gerada pela IA execute operações não autorizadas. Isso reduz o risco de uma IA gerar uma consulta que altere ou exponha dados indevidamente.
-   Auditoria: Deve registrar ações importantes, como quem acessou ou alterou os dados e quando, permitindo identificar problemas e acessos indevidos.
-   LGPD: Dados pessoais devem ter acesso restrito e não devem ser enviados desnecessariamente para ferramentas de IA externas, reduzindo o risco de vazamento.
+#### -Resposta:
+   * Menor privilégio: Cada usuário deve possuir somente as permissões necessárias para sua função. Por exemplo, um analista pode consultar vendas, mas não deve poder excluir dados ou acessar informações pessoais desnecessárias.
+
+   * Roles: São conjuntos de permissões atribuídos aos usuários de acordo com sua função. Por exemplo, pode existir uma role analista, com permissão apenas para consultar determinados dados.
+
+   * Views: Permitem disponibilizar apenas uma parte dos dados. Por exemplo, uma view de vendas pode mostrar valores e produtos, mas ocultar  CPF e endereço dos clientes.
+
+   * Controle de execução: As permissões devem ser verificadas pelo banco para impedir que uma consulta gerada pela IA execute operações não autorizadas. Isso reduz o risco de uma IA gerar uma consulta que altere ou exponha dados indevidamente.
+
+   * Auditoria: Deve registrar ações importantes, como quem acessou ou alterou os dados e quando, permitindo identificar problemas e acessos indevidos.
+
+   * LGPD: Dados pessoais devem ter acesso restrito e não devem ser enviados desnecessariamente para ferramentas de IA externas, reduzindo o risco de vazamento.
 
 ### 1.5 Atuação do DBA no cenário de IA
 Monitoramento, políticas de acesso, auditoria, orientação aos usuários,
 performance e backups.
+#### -Resposta:
+   * Monitoramento: O DBA acompanha o banco para identificar consultas lentas, pesadas ou que consumam muitos recursos. O livro apresenta o monitoramento como uma forma de identificar problemas de desempenho e gargalos nas consultas.
 
+   * Políticas de acesso: Define roles e permissões, garantindo que cada usuário tenha somente o acesso necessário. O controle pode ser aplicado inclusive a registros específicos, como ocorre na autorização por linhas.
+
+   * Auditoria:Acompanha as operações realizadas pelos usuários para identificar possíveis acessos indevidos ou alterações não autorizadas.
+
+   * Orientação aos usuários: Orienta sobre o uso seguro das ferramentas de IA, principalmente sobre os riscos de enviar dados sensíveis para serviços externos e de executar consultas sem validação.
+
+   * Performance: Analisa e otimiza consultas, índices e estruturas do banco para evitar que consultas complexas geradas por IA prejudiquem o desempenho. O DBA pode atuar diretamente na identificação e eliminação de gargalos.
+
+   * Backups: Mantém cópias de segurança e mecanismos de recuperação para que os dados possam ser restaurados em caso de falhas, corromper ou perdas.
 ### 1.6 Análise crítica: qual a melhor abordagem?
 Posição fundamentada do grupo sobre como distribuir dados com segurança
 no contexto do uso de IA.
