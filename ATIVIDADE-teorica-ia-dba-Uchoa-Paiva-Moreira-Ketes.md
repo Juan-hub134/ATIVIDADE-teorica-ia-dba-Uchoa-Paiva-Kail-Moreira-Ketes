@@ -64,33 +64,36 @@ vazamento por prompts — impactos na segurança e na integridade.
 Menor privilégio, views, roles customizadas, controle de execução, auditoria,
 conformidade (LGPD).
 #### -Resposta:
-   * Menor privilégio: Cada usuário deve possuir somente as permissões necessárias para sua função. Por exemplo, um analista pode consultar vendas, mas não deve poder excluir dados ou acessar informações pessoais desnecessárias.
+   * A distribuição segura de dados busca garantir que cada usuário tenha acesso apenas às informações necessárias para sua função. O DBA (Database Administrator, administrador do banco de dados) é responsável por administrar usuários, permissões e mecanismos de segurança, controlando o acesso aos dados.
 
-   * Roles: São conjuntos de permissões atribuídos aos usuários de acordo com sua função. Por exemplo, pode existir uma role analista, com permissão apenas para consultar determinados dados.
+   * Menor privilégio: O menor privilégio (princípio de conceder somente as permissões necessárias) consiste em dar ao usuário apenas os acessos necessários para realizar sua função. Por exemplo, um funcionário que apenas consulta dados recebe SELECT (permissão para consultar dados), sem permissão para alterar ou excluir informações.
+
+   * Roles e Permissões: As roles (grupos de permissões associados a uma função) permitem organizar os acessos dos usuários. Por exemplo, pode-se criar uma role para analistas e conceder a ela apenas as permissões necessárias. O GRANT (comando utilizado para conceder permissões) permite liberar um acesso, enquanto o REVOKE (comando utilizado para retirar permissões) remove esse acesso.
 
    * Views: Permitem disponibilizar apenas uma parte dos dados. Por exemplo, uma view de vendas pode mostrar valores e produtos, mas ocultar  CPF e endereço dos clientes.
 
-   * Controle de execução: As permissões devem ser verificadas pelo banco para impedir que uma consulta gerada pela IA execute operações não autorizadas. Isso reduz o risco de uma IA gerar uma consulta que altere ou exponha dados indevidamente.
+   * Controle de execução: O controle de execução (controle de quem pode executar determinadas funções ou procedimentos) impede que qualquer usuário execute operações que não deveria.O privilégio EXECUTE (permissão para executar uma função ou procedimento) pode ser concedido somente aos usuários autorizados.
 
-   * Auditoria: Deve registrar ações importantes, como quem acessou ou alterou os dados e quando, permitindo identificar problemas e acessos indevidos.
+   * Auditoria: A auditoria (registro das ações realizadas no banco de dados) permite identificar quem realizou uma ação e quando ela aconteceu. Isso ajuda a investigar acessos indevidos ou alterações incorretas.
 
-   * LGPD: Dados pessoais devem ter acesso restrito e não devem ser enviados desnecessariamente para ferramentas de IA externas, reduzindo o risco de vazamento.
+   * LGPD: A LGPD (Lei Geral de Proteção de Dados) estabelece regras para a proteção de dados pessoais. Nesse contexto, mecanismos como menor privilégio, roles, views e auditoria ajudam a controlar o acesso e reduzir a exposição de informações pessoais.
 
 ### 1.5 Atuação do DBA no cenário de IA
 Monitoramento, políticas de acesso, auditoria, orientação aos usuários,
 performance e backups.
 #### -Resposta:
-   * Monitoramento: O DBA acompanha o banco para identificar consultas lentas, pesadas ou que consumam muitos recursos. O livro apresenta o monitoramento como uma forma de identificar problemas de desempenho e gargalos nas consultas.
+   * Monitoramento:O DBA deve acompanhar continuamente o banco de dados para identificar problemas de desempenho e atividades suspeitas. No cenário de IA, isso é ainda mais importante porque os ataques podem ser automatizados e mudar de estratégia para escapar das defesas. Por isso, o uso de monitoramento de anomalias ajuda a identificar comportamentos fora do padrão.
 
-   * Políticas de acesso: Define roles e permissões, garantindo que cada usuário tenha somente o acesso necessário. O controle pode ser aplicado inclusive a registros específicos, como ocorre na autorização por linhas.
+   * Políticas de acesso: O DBA deve definir quem pode acessar os dados e quais ações cada usuário pode realizar, seguindo o princípio do menor privilégio. No PostgreSQL, por exemplo, uma ROLE pode receber apenas a permissão SELECT, permitindo consultar dados sem alterá-los. Também podem ser utilizadas VIEWs para mostrar somente as informações necessárias para cada usuário, reduzindo a exposição de dados sensíveis. O controle de acesso é uma das principais camadas de segurança dos bancos de dados.
 
-   * Auditoria:Acompanha as operações realizadas pelos usuários para identificar possíveis acessos indevidos ou alterações não autorizadas.
+   * Auditoria: A auditoria consiste em registrar as atividades realizadas no banco para permitir identificar quem realizou determinada ação e quando ela ocorreu. Ela se diferencia do monitoramento porque o monitoramento acompanha as atividades e busca identificar comportamentos anormais, enquanto a auditoria mantém registros que podem ser utilizados posteriormente para investigação.
 
-   * Orientação aos usuários: Orienta sobre o uso seguro das ferramentas de IA, principalmente sobre os riscos de enviar dados sensíveis para serviços externos e de executar consultas sem validação.
+   * Orientação aos usuários: O DBA deve orientar os usuários sobre o uso correto do banco, proteção de credenciais e cuidados com permissões. Essa orientação é importante porque ataques baseados em IA também podem utilizar phishing, engenharia social e deepfakes para enganar usuários e administradores. Dessa forma, a segurança depende não apenas da tecnologia, mas também do comportamento dos usuários.
 
-   * Performance: Analisa e otimiza consultas, índices e estruturas do banco para evitar que consultas complexas geradas por IA prejudiquem o desempenho. O DBA pode atuar diretamente na identificação e eliminação de gargalos.
+   * Performance: O DBA deve garantir que o banco continue funcionando de maneira eficiente mesmo com a utilização de mecanismos de segurança. Algumas soluções de defesa baseadas em IA podem exigir mais recursos computacionais, tornando necessário equilibrar segurança e desempenho. O estudo considera fatores como custo computacional, eficiência e escalabilidade na avaliação das defesas.
 
-   * Backups: Mantém cópias de segurança e mecanismos de recuperação para que os dados possam ser restaurados em caso de falhas, corromper ou perdas.
+   * Backups: O DBA deve manter backups para permitir a recuperação dos dados após falhas ou ataques. No cenário de IA, backups e recuperação rápida são importantes para reduzir os impactos de ataques que possam comprometer ou alterar informações. O artigo recomenda mecanismos de backup e recuperação como parte de uma estratégia de defesa em múltiplas camadas.
+   
 ### 1.6 Análise crítica: qual a melhor abordagem?
 Posição fundamentada do grupo sobre como distribuir dados com segurança
 no contexto do uso de IA.
