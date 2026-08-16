@@ -97,7 +97,10 @@ performance e backups.
 ### 1.6 Análise crítica: qual a melhor abordagem?
 Posição fundamentada do grupo sobre como distribuir dados com segurança
 no contexto do uso de IA.
+#### -Reposta:
+   * A melhor abordagem para distribuir dados com segurança no contexto do uso de IA é utilizar uma estratégia de defesa em camadas, combinando controle de acesso, menor privilégio, VIEWs, auditoria, monitoramento e backups. Essa abordagem é mais segura do que depender de apenas um mecanismo, pois os ataques baseados em IA podem ser automatizados e adaptativos, conseguindo contornar defesas tradicionais.
 
+   * Para o grupo, os dados devem ser distribuídos somente para quem realmente precisa deles, utilizando roles e permissões (definem o que cada usuário pode acessar ou fazer) e VIEWs (mostram apenas os dados necessários). Além disso, o monitoramento (acompanhamento das atividades) e a auditoria (registro das ações realizadas) permitem identificar e investigar comportamentos suspeitos. Os backups complementam essa proteção ao possibilitar a recuperação dos dados em caso de ataques ou falhas. O artigo também recomenda uma abordagem em múltiplas camadas, com monitoramento e recuperação rápida.
 ## 2. Exemplos e Casos
 
 Exemplo de view `clientes_visiveis` no PostgreSQL e exemplo de role/permissão.
