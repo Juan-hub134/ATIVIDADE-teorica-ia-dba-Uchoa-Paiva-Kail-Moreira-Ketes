@@ -26,6 +26,13 @@ vazamento por prompts — impactos na segurança e na integridade.
 ### 1.4 Distribuição segura de dados
 Menor privilégio, views, roles customizadas, controle de execução, auditoria,
 conformidade (LGPD).
+ -Resposta:
+   Menor privilégio: Cada usuário deve possuir somente as permissões necessárias para sua função. Por exemplo, um analista pode consultar vendas, mas não deve poder excluir dados ou acessar informações pessoais desnecessárias.
+   Roles: São conjuntos de permissões atribuídos aos usuários de acordo com sua função. Por exemplo, pode existir uma role analista, com permissão apenas para consultar determinados dados.
+   Views: Permitem disponibilizar apenas uma parte dos dados. Por exemplo, uma view de vendas pode mostrar valores e produtos, mas ocultar  CPF e endereço dos clientes.
+   Controle de execução: As permissões devem ser verificadas pelo banco para impedir que uma consulta gerada pela IA execute operações não autorizadas. Isso reduz o risco de uma IA gerar uma consulta que altere ou exponha dados indevidamente.
+   Auditoria: Deve registrar ações importantes, como quem acessou ou alterou os dados e quando, permitindo identificar problemas e acessos indevidos.
+   LGPD: Dados pessoais devem ter acesso restrito e não devem ser enviados desnecessariamente para ferramentas de IA externas, reduzindo o risco de vazamento.
 
 ### 1.5 Atuação do DBA no cenário de IA
 Monitoramento, políticas de acesso, auditoria, orientação aos usuários,
