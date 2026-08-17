@@ -1,6 +1,6 @@
 # Atividade Teórica: Usuários Especialistas, IA e Distribuição Segura de Dados
 
-**Aluno(s):** Henrick Uchoa, Allan Paiva, Juan Moreira, Guilherme Ketes
+**Aluno(s):**  Allan Paiva, Henrick Uchoa, Guilherme Kete e Juan Moreira.
 **Turma:** Banco de Dados 2026 (Turma : G2)
 **Data:** 16/08/2026
 **Repositório Git:** https://github.com/Juan-hub134/ATIVIDADE-teorica-ia-dba-Uchoa-Paiva-Kail-Moreira-Ketes.git
@@ -8,6 +8,15 @@
 ## Resumo Executivo
 
 Breve descrição do tema e da posição adotada pelo grupo.
+
+-Resposta:
+
+Este trabalho apresenta uma análise sobre a atuação do Database Administrator (DBA), os diferentes perfis de usuários de banco de dados e os desafios relacionados ao uso de Inteligência Artificial por usuários especialistas. São discutidos riscos como consultas incorretas, exposição de dados sensíveis, degradação de performance e vazamento de informações, além dos impactos que essas situações podem causar na segurança e na integridade do banco de dados.
+
+Como forma de reduzir esses riscos, o trabalho aborda mecanismos de distribuição segura de dados, como o princípio do menor privilégio, uso de views, roles customizadas, controle de execução, auditoria e conformidade com a LGPD. Também é analisado o papel do DBA no monitoramento, definição de políticas de acesso, orientação dos usuários, manutenção da performance e realização de backups.
+
+A posição adotada pelo grupo é que a Inteligência Artificial deve ser utilizada como uma ferramenta de apoio aos usuários e profissionais de banco de dados, e não como substituta da supervisão humana. A distribuição dos dados deve continuar sendo controlada pelos mecanismos de segurança do SGBD e pelas políticas definidas pelo DBA, utilizando uma estratégia de defesa em camadas para garantir que cada usuário tenha acesso somente às informações necessárias para sua função.
+
 
 ## 1. Desenvolvimento Teórico
 
@@ -214,8 +223,46 @@ SILBERSCHATZ, Abraham; KORTH, Henry F.; SUDARSHAN, S. **Database System Concepts
 Fontes consultadas (livros, artigos, documentação oficial do PostgreSQL,
 materiais do curso).
 
+-Resposta:
+
+* SILBERSCHATZ, Abraham; KORTH, Henry F.; SUDARSHAN, S. **Database System Concepts**. 7th ed. New York: McGraw-Hill, 2020.
+
+* PARKER, Oakley. **AI-Enhanced Database Management: Strengthening Cybersecurity for Intelligent Data Protection**. 2020.
+
 ## 4. Conclusões
 
 Aprendizados, reflexões e principais pontos observados pelo grupo.
 
+### Reflexão sobre os Aprendizados do Projeto
+
+A realização deste estudo proporcionou ao grupo uma visão aprofundada e crítica sobre como os conceitos clássicos de Administração de Banco de Dados (SGBD) se reconfiguram diante do avanço da Inteligência Artificial. Compreendemos que, embora a tecnologia transforme a forma como lidamos com os dados, os princípios fundamentais de segurança, integridade e governança propostos por Silberschatz et al. (2020) permanecem como o pilar central indispensável para o funcionamento de qualquer arquitetura corporativa.
+
+---
+
+### Pontos Positivos e Desafios Identificados
+
+#### *Pontos Positivos*
+* *Catalisador de Produtividade:* Para os usuários especialistas, a IA atua como uma ferramenta poderosa na agilização da escrita de scripts SQL, modelagem analítica e automação de tarefas repetitivas.
+* *Potencial Defensivo e de Monitoramento:* No âmbito da infraestrutura, a IA oferece capacidades avançadas de monitoramento em tempo real, detecção proativa de anomalias, automação de atualizações de segurança (automated patching) e criptografia adaptativa.
+
+#### *Pontos Negativos*
+* *Alucinações e Falhas de Lógica:* A ausência de compreensão semântica real faz com que os modelos gerem consultas ineficientes, com omissão de junções (CROSS JOIN) que sobrecarregam e travam o SGBD.
+* *Vulnerabilidades de Segurança:* O uso descuidado expõe a organização ao vazamento passivo de dados sensíveis (violando a LGPD) e a ataques de Prompt Injection.
+* *Risco de Tomada de Decisão Autônoma:* A confiança cega em instruções geradas por IA sem validação técnica pode resultar em bypasses não intencionais de segurança e na corrupção da integridade referencial dos dados.
+
+---
+
+### Coexistência Harmoniosa: Mitigando Erros com Governança Humana
+
+Para que o uso da Inteligência Artificial coexista de forma segura e eficiente com o trabalho humano, é necessário estabelecer um modelo de *supervisão e governança em camadas*, cobrindo as lacunas deixadas pela automação indiscriminada:
+
+1. *Abordagem *Human-in-the-Loop:** Nenhuma instrução SQL gerada por IA deve ser executada diretamente em ambiente de produção sem a revisão e validação prévia do usuário especialista ou do DBA. O código da IA deve ser tratado estritamente como uma sugestão pendente de auditoria.
+2. *SGBD como Barreira Inviolável:* A segurança não deve depender da "boa conduta" da IA, mas sim das regras impostas pelo DBA no banco de dados. A aplicação rigorosa do *Princípio do Menor Privilégio, aliada ao uso de **Views* e *Roles* restritas, garante que, mesmo que a IA gere um código malicioso ou incorreto, o SGBD bloqueie a execução indevida.
+3. *Ambientes de Sandbox e Homologação:* Scripts complexos de manipulação de dados (UPDATE/DELETE) gerados por IA devem ser testados isoladamente antes da aplicação real, prevenindo impactos na performance ou perda de dados.
+4. *Capacitação e Conscientização:* Orientar os usuários sobre as limitações dos modelos e os riscos de enviar dados corporativos sigilosos para ferramentas públicas de IA.
+
+---
+
 ## Link do Repositório Git
+
+- https://github.com/Juan-hub134/ATIVIDADE-teorica-ia-dba-Uchoa-Paiva-Kail-Moreira-Ketes.git
